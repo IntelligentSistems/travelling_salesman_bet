@@ -2,4 +2,6 @@
 
 
 class House():
-	pass
+    bet_min=10
+    weights=[]
+    
