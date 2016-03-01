@@ -18,10 +18,12 @@ class House():
 		for i in range(size):
 			w=0
 			for player in players:
-				big_weight += player.weight[i]
-				w += player.weight[i]
+				big_weight += player.weights[i]
+				w += player.weights[i]
 			self.weights.append(w)
 
 		for i in range(size):
 			self.weights[i] /= big_weight
 	
+	def receiveBet(self, bet):
+		self.bankroll += bet

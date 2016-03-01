@@ -12,7 +12,7 @@ class Game():
 	players=[]
 	solution=[]
 	
-	def __init__(self, size_of_player, turns=10000, players_number=20, mask_size=3):
+	def __init__(self, size_of_player=4, turns=10000, players_number=20, mask_size=3):
 		self.mask_size = mask_size
 		self.size_of_player = size_of_player
 		self.turns = turns
@@ -38,23 +38,21 @@ class Game():
 			
 			for player in self.players:
 				player.makeBets(self.house)
-				print "The player "+ player.name +" makes bets."
+				#print "The player "+ player.name +" makes bets."
 			
-			relsult = mask.calculateBestMask(self.event, self.solution)
-			
+			result = mask.calculateBestMask(self.event, self.solution)
+
 			for index in range(len(self.players)):
 				player = self.players[index]
-				if player.isWinner(result):
+				if player.isWinner(result["index"]):
 					player.receiveAward(self.house, result)
 					print "The player "+ player.name +" receives award."
-				if player.isBroke():
+				if player.isBroken():
 					print "The player "+ player.name +" is out."
 					self.players[index] = player.createNew()
 					print "The new player "+ self.players[index].name +" is in."
-				
-			new_solution = mask.generateSolution(result, self.solution)
 			
-			if self.event.f(new_solution) < self.event.f(solution):
-				self.solution = new_solution
+			if result["distance"] < self.event.f(self.solution):
+				self.solution = result["solution"]
 
 		return self.solution

@@ -18,7 +18,6 @@ class Player():
 		self.bankroll = bankroll
 		self.name=randomName()
 		self.probabilities = [0] * size
-		self.bets = [0] * size
 		for i in range(size):
 			self.probabilities[i] = random()
 
@@ -45,16 +44,26 @@ class Player():
 			self.weights.append(w)
 	
 	def makeBets(self, house):
-		pass
+		for i in range(len(self.weights)):
+			bet=0
+			if house.weights[i] > self.weights[i]:
+				p = 1.0/self.weights[i]
+				bet = ((p*house.weights[i] - 1)/(house.weights[i] - 1))*self.bankroll
+				bet = min(self.bankroll, max(bet, house.bet_min))
+			
+			self.bankroll -= bet
+			self.bets.append(bet)
+			house.receiveBet(bet)
 	
 	def isWinner(self, result):
-		pass
+		return self.bets[result] > 0
 	
-	def isBroke(self, result):
-		pass
+	def isBroken(self):
+		return self.bankroll == 0
 	
 	def receiveAward(self, house, result):
-		pass
+		self.bankroll += house.weights[result]*self.bets[result]
 	
 	def createNew(self):
-		pass
+		return Player(len(self.probabilities))
+
