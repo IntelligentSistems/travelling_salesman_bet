@@ -17,7 +17,7 @@ class Game():
 		self.size_of_player = size_of_player
 		self.turns = turns
 		self.house = House()
-		self.event = Event()
+		self.event = Event(size=size_of_player)
 		
 		for index in range(players_number):
 			player = Player(size_of_player)
