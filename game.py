@@ -56,4 +56,5 @@ class Game():
 			
 			if self.event.f(new_solution) < self.event.f(solution):
 				self.solution = new_solution
-			
+
+		return self.solution
