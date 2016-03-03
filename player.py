@@ -38,13 +38,16 @@ class Player():
 
 	def calculateWeights(self, mask):
 		number_of_weights = pow(2,mask.size)
+		self.weights = [ 0 for x in range(number_of_weights) ]
 		
 		for i in range(number_of_weights):
 			w = self.calculateWeight(i, mask)
-			self.weights.append(w)
+			self.weights[i] = w
 	
 	def makeBets(self, house):
-		for i in range(len(self.weights)):
+		number_of_bets = len(self.weights)
+		self.bets = [ 0 for x in range(number_of_bets) ]
+		for i in range(number_of_bets):
 			bet=0
 			if house.weights[i] > self.weights[i]:
 				p = 1.0/self.weights[i]
@@ -52,7 +55,7 @@ class Player():
 				bet = min(self.bankroll, max(bet, house.bet_min))
 			
 			self.bankroll -= bet
-			self.bets.append(bet)
+			self.bets[i] = bet
 			house.receiveBet(bet)
 	
 	def isWinner(self, result):

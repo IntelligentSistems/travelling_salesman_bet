@@ -35,17 +35,19 @@ class Game():
 				player.calculateWeights(mask)
 			
 			self.house.calculateWeights(self.players)
+			print "Weights of house: "+ str(self.house.weights)
 			
 			for player in self.players:
 				player.makeBets(self.house)
-				print "The player "+ player.name +" has "+ str(player.bankroll) +" and makes bets."
+				print "The player "+ player.name +" has "+ str(player.bankroll) +" and makes bets." + str(player.bets)
 			
 			result = mask.calculateBestMask(self.event, self.solution)
-
+			print "The result was "+ str(result["index"])
+			
 			for index in range(len(self.players)):
 				player = self.players[index]
 				if player.isWinner(result["index"]):
-					player.receiveAward(self.house, result)
+					player.receiveAward(self.house, result["index"])
 					print "The player "+ player.name +" receives award."
 				if player.isBroken():
 					print "The player "+ player.name +" is out."

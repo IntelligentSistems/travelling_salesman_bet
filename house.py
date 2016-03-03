@@ -14,13 +14,15 @@ class House():
 	
 	def calculateWeights(self, players):
 		size = len(players[0].weights)
+		self.weights = [ 0 for x in range(size) ]
+		
 		big_weight=0
 		for i in range(size):
 			w=0
 			for player in players:
 				big_weight += player.weights[i]
 				w += player.weights[i]
-			self.weights.append(w)
+			self.weights[i] = w
 
 		for i in range(size):
 			self.weights[i] /= big_weight
