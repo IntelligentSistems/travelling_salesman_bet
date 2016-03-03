@@ -6,13 +6,13 @@ from event import Event
 from mask import Mask
 
 class Game():
-	turns=10000
+	turns=5
 	event=None
 	house=None
 	players=[]
 	solution=[]
 	
-	def __init__(self, size_of_player=4, turns=10000, players_number=20, mask_size=3):
+	def __init__(self, size_of_player=4, turns=5, players_number=20, mask_size=3):
 		self.mask_size = mask_size
 		self.size_of_player = size_of_player
 		self.turns = turns
@@ -38,7 +38,7 @@ class Game():
 			
 			for player in self.players:
 				player.makeBets(self.house)
-				#print "The player "+ player.name +" makes bets."
+				print "The player "+ player.name +" has "+ str(player.bankroll) +" and makes bets."
 			
 			result = mask.calculateBestMask(self.event, self.solution)
 
@@ -52,6 +52,7 @@ class Game():
 					self.players[index] = player.createNew()
 					print "The new player "+ self.players[index].name +" is in."
 			
+			print "The house has "+ str(self.house.bankroll)
 			if result["distance"] < self.event.f(self.solution):
 				self.solution = result["solution"]
 
