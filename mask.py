@@ -16,34 +16,23 @@ class Mask():
 
 	def transformation(self, index, solution, event):
 		y = solution
-		#if solution is None:
-			#print "WWWTTTTFFFF"
-		for j in range(self.size):
-			if index % pow(2,j) == 0:
-				#print "Oi "+ str(y)
+		k = index
+		for x in range(self.size):
+			j = self.size - 1 - x
+			if k % 2 == 0:
+			
 				core = y[self.indexes[j]:self.indexes[j]+self.core+1]
-				#print "core: "+ str(core)
 				temp_solution = y[:self.indexes[j]] + y[self.indexes[j]+self.core+1:]
 				best = None
 
-				#print "Vou para o for. Me aguarde"
-
 				for i in range(len(temp_solution)):
-
-					#print "Vamos imprimir temp a seguir. Ou nao"
-
+				
 					temp = temp_solution[:i] + core + temp_solution[i:]
-
-					#print temp
 
 					if best is None or event.f(temp) < event.f(best):
 						best = temp
-						#print "Entrei no if."
-				
-				#print "TEMP SOLUTION "+ str(temp_solution)
-
 				y = best
-				
+			k /= 2
 		return y						
 				
  

@@ -12,7 +12,8 @@ class Game():
 	players=[]
 	solution=[]
 	
-	def __init__(self, size_of_player=20, turns=100000, players_number=20, mask_size=3):
+	def __init__(self, size_of_player=20, turns=10000000, players_number=20, mask_size=3, convergence=1000):
+		self.convergence = convergence
 		self.mask_size = mask_size
 		self.size_of_player = size_of_player
 		self.turns = turns
@@ -28,6 +29,7 @@ class Game():
 	
 	def play(self):
 		self.solution = self.event.getInitialSolution()
+		convergence = 0
 		print "graph: "
 		print self.event
 		print "iteration: -1; f(solution) = "+str(self.event.f(self.solution))+"; solution: "+str(self.solution)
@@ -56,10 +58,18 @@ class Game():
 					#print "The player "+ player.name +" is out."
 					self.players[index] = player.createNew()
 					#print "The new player "+ self.players[index].name +" is in."
+				#print "The player "+ player.name +" has "+ str(player.bankroll)
 			
 			#print "The house has "+ str(self.house.bankroll)
 			if result["distance"] < self.event.f(self.solution):
+				convergence = 0
 				self.solution = result["solution"]
 				print "iteration: "+str(turn)+"; f(solution) = "+str(self.event.f(self.solution))+"; solution: "+str(self.solution)
+			else:
+				convergence += 1
+			
+			
+			if convergence >= self.convergence:
+				break
 
 		return self.solution
