@@ -29,3 +29,8 @@ class House():
 	
 	def receiveBet(self, bet):
 		self.bankroll += bet
+	
+	def payAward(self, result, player):
+		award = self.weights[result]*player.bets[result]
+		self.bankroll -= award
+		return award

@@ -12,7 +12,7 @@ class Game():
 	players=[]
 	solution=[]
 	
-	def __init__(self, size_of_player=4, turns=5, players_number=20, mask_size=3):
+	def __init__(self, size_of_player=20, turns=100000, players_number=20, mask_size=3):
 		self.mask_size = mask_size
 		self.size_of_player = size_of_player
 		self.turns = turns
@@ -28,6 +28,9 @@ class Game():
 	
 	def play(self):
 		self.solution = self.event.getInitialSolution()
+		print "graph: "
+		print self.event
+		print "iteration: -1; f(solution) = "+str(self.event.f(self.solution))+"; solution: "+str(self.solution)
 		for turn in range(self.turns):
 			mask = self.generateMask()
 			
@@ -35,27 +38,28 @@ class Game():
 				player.calculateWeights(mask)
 			
 			self.house.calculateWeights(self.players)
-			print "Weights of house: "+ str(self.house.weights)
+			#print "Weights of house: "+ str(self.house.weights)
 			
 			for player in self.players:
 				player.makeBets(self.house)
-				print "The player "+ player.name +" has "+ str(player.bankroll) +" and makes bets." + str(player.bets)
+				#print "The player "+ player.name +" has "+ str(player.bankroll) +" and makes bets." + str(player.bets)
 			
 			result = mask.calculateBestMask(self.event, self.solution)
-			print "The result was "+ str(result["index"])
+			#print "The result was "+ str(result["index"])
 			
 			for index in range(len(self.players)):
 				player = self.players[index]
 				if player.isWinner(result["index"]):
 					player.receiveAward(self.house, result["index"])
-					print "The player "+ player.name +" receives award."
+					#print "The player "+ player.name +" receives award."
 				if player.isBroken():
-					print "The player "+ player.name +" is out."
+					#print "The player "+ player.name +" is out."
 					self.players[index] = player.createNew()
-					print "The new player "+ self.players[index].name +" is in."
+					#print "The new player "+ self.players[index].name +" is in."
 			
-			print "The house has "+ str(self.house.bankroll)
+			#print "The house has "+ str(self.house.bankroll)
 			if result["distance"] < self.event.f(self.solution):
 				self.solution = result["solution"]
+				print "iteration: "+str(turn)+"; f(solution) = "+str(self.event.f(self.solution))+"; solution: "+str(self.solution)
 
 		return self.solution

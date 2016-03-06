@@ -65,7 +65,7 @@ class Player():
 		return self.bankroll == 0
 	
 	def receiveAward(self, house, result):
-		self.bankroll += house.weights[result]*self.bets[result]
+		self.bankroll += house.payAward(result, self)
 	
 	def createNew(self):
 		return Player(len(self.probabilities))

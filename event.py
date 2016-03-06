@@ -11,6 +11,16 @@ class Event():
 			for j in range(size):
 				if i == j:
 					self.graph[i][j] = 0
+	
+	def __str__(self):
+		out = " i "
+		for x in range(len(self.graph)):
+			out += " "+str(x)+" "
+		out += "\n"
+		for x in range(len(self.graph)):
+			out += " "+str(x)+" "+str(self.graph[x])+"\n"
+		
+		return out
 		
 	
 	def f(self, solution):
