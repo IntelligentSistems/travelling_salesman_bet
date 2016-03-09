@@ -34,9 +34,9 @@ class Game():
 	def play(self):
 		self.solution = self.event.getInitialSolution()
 		convergence = 0
-		print "graph: "
-		print self.event
-		print "iteration: -1; f(solution) = "+str(self.event.f(self.solution))+"; solution: "+str(self.solution)
+		#print "graph: "
+		#print self.event
+		print "iteration: -1; f(solution) = "+str(self.event.f(self.solution))
 		for turn in range(self.turns):
 			mask = self.generateMask()
 			
@@ -68,12 +68,12 @@ class Game():
 			if result["distance"] < self.event.f(self.solution):
 				convergence = 0
 				self.solution = result["solution"]
-				print "iteration: "+str(turn)+"; f(solution) = "+str(self.event.f(self.solution))+"; solution: "+str(self.solution)
+				print "iteration: "+str(turn)+"; f(solution) = "+str(self.event.f(self.solution))
 			else:
 				convergence += 1
 			
 			
 			if convergence >= self.convergence:
 				break
-
+			
 		return self.solution

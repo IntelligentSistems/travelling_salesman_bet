@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
 from game import Game
-
-g = Game(filename="br17.txt")
+import sys
+g = Game(filename=sys.argv[1])
 g.play()
 
 
