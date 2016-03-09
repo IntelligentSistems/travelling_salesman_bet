@@ -28,10 +28,15 @@ class Mask():
 				for i in range(len(temp_solution)):
 				
 					temp = temp_solution[:i] + core + temp_solution[i:]
+					val = event.f(temp)
+					if val is None:
+						continue
 
-					if best is None or event.f(temp) < event.f(best):
+					if best is None or val < event.f(best):
 						best = temp
-				y = best
+
+				if best is not None:
+					y = best
 			k /= 2
 		return y						
 				

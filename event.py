@@ -5,6 +5,7 @@ from file import File
 
 class Event():
 	graph=None
+	min=0
 	
 	def __init__(self, filename=None, size=4, max_weight=10):
 		if filename is None:
@@ -27,30 +28,51 @@ class Event():
 
 	def __len__(self):
 		return len(self.graph)
-		
 	
-	def f(self, solution):
-		source = solution[0]
+
+	def f(self, path, isSolution=True):
+		source = path[0]
 		weight = 0
 		
-		for destiny in solution:
-			weight += self.graph[source][destiny]
+		for destiny in path:
+			if destiny != source:
+				value = self.graph[source][destiny]
+				if value < self.min:
+					return None
+				weight += value
+
 			source = destiny
 		
-		destiny = solution[0]
-		weight += self.graph[source][destiny]
+		if isSolution:
+			destiny = path[0]
+			weight += self.graph[source][destiny]
 
 		return weight
-	
 	
 	def getInitialSolution(self):
 		solution=[]
 		numbers_of_vertex = len(self.graph)
- 
-		for i in range(numbers_of_vertex):
+ 		count = 0
+
+		while len(solution) < numbers_of_vertex:
 			vertex = randint(0,numbers_of_vertex-1)
 			while vertex in solution:
 				vertex = randint(0,numbers_of_vertex-1)
 			solution.append(vertex)
+			if len(solution) == numbers_of_vertex:
+				if self.f(solution, True) is None:
+					solution.pop()
+					count += 1
+				else:
+					count = 0
+			else:
+				if self.f(solution, False) is None:
+					solution.pop()
+					count += 1
+				else:
+					count = 0
+
+			if count == 2:
+				solution = []
 
 		return solution
