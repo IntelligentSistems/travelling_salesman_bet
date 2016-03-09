@@ -11,7 +11,10 @@ class File():
 			graphSize = f.readline()
 			for line in f:
 				for s in line.split():
-					num.append(int(s))			
+					temp = int(s)
+					if temp == 9999:
+						temp = -1
+					num.append(temp)			
 				print str(num)
 				graph.append(num)
 				num = []

@@ -12,16 +12,20 @@ class Game():
 	players=[]
 	solution=[]
 	
-	def __init__(self, size_of_player=20, turns=10000000, players_number=20, mask_size=3, convergence=1000):
+	def __init__(self, filename=None, size_of_player=20, turns=10000000, players_number=20, mask_size=3, convergence=1000):
 		self.convergence = convergence
 		self.mask_size = mask_size
-		self.size_of_player = size_of_player
 		self.turns = turns
 		self.house = House()
-		self.event = Event(size=size_of_player)
+		if filename is not None:
+			self.event = Event(filename=filename)
+		else:
+			self.event = Event(size=size_of_player)
+
+		self.size_of_player = len(self.event)
 		
 		for index in range(players_number):
-			player = Player(size_of_player)
+			player = Player(self.size_of_player)
 			self.players.append(player)
 	
 	def generateMask(self):

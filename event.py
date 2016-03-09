@@ -6,16 +6,13 @@ from file import File
 class Event():
 	graph=None
 	
-	def __init__(self, size=4, max_weight=10):
-		self.graph = [[randint(1,max_weight) for x in range(size)] for y in range(size)]
-		#Soh descomentar essa parte pra ler do arquivo
-		#self.graph = File('br17.txt').graph
-		
-		
-		for i in range(size):
-			for j in range(size):
-				if i == j:
-					self.graph[i][j] = 0
+	def __init__(self, filename=None, size=4, max_weight=10):
+		if filename is None:
+			self.graph = [[randint(1,max_weight) for x in range(size)] for y in range(size)]
+			for i in range(size):
+				self.graph[i][i] = -1
+		else:
+			self.graph = File(filename).graph
 		
 	
 	def __str__(self):
@@ -27,6 +24,9 @@ class Event():
 			out += " "+str(x)+"  "+str(self.graph[x])+"\n"
 		
 		return out
+
+	def __len__(self):
+		return len(self.graph)
 		
 	
 	def f(self, solution):

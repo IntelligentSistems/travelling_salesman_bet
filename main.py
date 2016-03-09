@@ -2,7 +2,7 @@
 
 from game import Game
 
-g = Game()
+g = Game(filename="br17.txt")
 g.play()
 
 
