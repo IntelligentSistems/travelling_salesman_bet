@@ -24,7 +24,12 @@ class File():
 				
 		self.graph = graph
 
-	def PrintOut(self, result, iteration):
+	def PrintOut(self, result, weightDif, end):
 		fileOut = open(self.fileNameOut, 'a')
-		fileOut.write("Resultado do teste " + str(iteration) + " = " + str(result))
-		fileOut.write("\n")
+		
+		if end == None:
+			fileOut.write("\n")
+			fileOut.write("Valor da solucao melhor = " + str(result) + "com diferenca de peso de : "+ str(weightDif))
+			fileOut.write("\n")
+		else:
+			fileOut.write("Proporcao de solucoes melhores : " + str(result) + " usando " + end)
