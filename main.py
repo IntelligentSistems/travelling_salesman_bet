@@ -1,6 +1,9 @@
 #!/usr/bin/python
 
 from game import Game
+from event import Event
+from file import File
+
 import sys
 
 from mask_movecore import MaskMoveCore
@@ -17,7 +20,11 @@ if len(sys.argv) == 3 and sys.argv[2] in masks:
 else:
 	mask = MaskMoveCore
 
-g = Game(filename=sys.argv[1], mask=mask)
-g.play()
+
+filename = sys.argv[1]
+g = Game(filename, mask=mask)
+for i in range(10):
+	result = g.play()
+	fileOut = File(filename).PrintOut(g.event.f(g.solution),i)
 
 

@@ -11,6 +11,7 @@ class Game():
 	house=None
 	players=[]
 	solution=[]
+	fileName = None
 	
 	def __init__(self, filename=None, size_of_player=20, turns=10000000, players_number=20, mask_size=3, convergence=1000, mask=MaskMoveCore):
 		self.convergence = convergence
@@ -18,7 +19,6 @@ class Game():
 		self.mask = mask
 		self.turns = turns
 		self.house = House()
-
 		if filename is not None:
 			self.event = Event(filename=filename)
 		else:
@@ -70,12 +70,13 @@ class Game():
 			if result["distance"] < self.event.f(self.solution):
 				convergence = 0
 				self.solution = result["solution"]
-				print "iteration: "+str(turn)+"; f(solution) = "+str(self.event.f(self.solution))
+				#print "iteration: "+str(turn)+"; f(solution) = "+str(self.event.f(self.solution))
 			else:
 				convergence += 1
 			
 			
 			if convergence >= self.convergence:
 				break
-			
+		
+		
 		return self.solution
