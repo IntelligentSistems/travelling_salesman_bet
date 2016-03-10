@@ -3,7 +3,7 @@
 from house import House
 from player import Player
 from event import Event
-from mask import Mask
+from mask_movecore import MaskMoveCore
 
 class Game():
 	turns=5
@@ -12,11 +12,13 @@ class Game():
 	players=[]
 	solution=[]
 	
-	def __init__(self, filename=None, size_of_player=20, turns=10000000, players_number=20, mask_size=3, convergence=1000):
+	def __init__(self, filename=None, size_of_player=20, turns=10000000, players_number=20, mask_size=3, convergence=1000, mask=MaskMoveCore):
 		self.convergence = convergence
 		self.mask_size = mask_size
+		self.mask = mask
 		self.turns = turns
 		self.house = House()
+
 		if filename is not None:
 			self.event = Event(filename=filename)
 		else:
@@ -29,7 +31,7 @@ class Game():
 			self.players.append(player)
 	
 	def generateMask(self):
-		return Mask(self.mask_size, self.size_of_player)
+		return self.mask(self.mask_size, self.size_of_player)
 	
 	def play(self):
 		self.solution = self.event.getInitialSolution()

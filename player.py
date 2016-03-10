@@ -21,27 +21,13 @@ class Player():
 		for i in range(size):
 			self.probabilities[i] = random()
 
-	
-	def calculateWeight(self, index, mask):
-		j = index
-		weight = 1
-		for i in range(mask.size):
-			x = mask.size - 1 - i
-			p = self.probabilities[mask.indexes[x]]
-			if j % 2 == 1:
-				weight *= p
-			else:
-				weight *= (1 - p)
-			j /= 2
-
-		return weight
 
 	def calculateWeights(self, mask):
 		number_of_weights = pow(2,mask.size)
 		self.weights = [ 0 for x in range(number_of_weights) ]
 		
 		for i in range(number_of_weights):
-			w = self.calculateWeight(i, mask)
+			w = mask.calculateWeight(i, self.probabilities)
 			self.weights[i] = w
 	
 	def makeBets(self, house):
