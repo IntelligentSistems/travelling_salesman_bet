@@ -7,14 +7,14 @@ class Mask():
 	indexes=[]
 	
 	def __init__(self, size, numbers_of_elements):
-		max_index = numbers_of_elements-1
+		self.max_index = numbers_of_elements-1
 		self.indexes = [0]*size
 		for i in range(size):
-			vertex = randint(0, max_index)
+			vertex = randint(0, self.max_index)
 			while vertex in self.indexes:
-				vertex = randint(0, max_index)
+				vertex = randint(0, self.max_index)
 			self.indexes[i] = vertex
-			
+
 		self.size=size
 
 	def transformation(self, index, solution, event):

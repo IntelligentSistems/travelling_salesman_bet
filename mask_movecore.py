@@ -1,6 +1,5 @@
 #!/usr/bin/python
 
-from random import randint
 from mask import Mask
 
 class MaskMoveCore(Mask):
